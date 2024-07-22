@@ -77,5 +77,37 @@ function getUserById(){
 }
 
 //escape the string
-function e($val)
+function e($val){
+    global $conn;
+    return mysqli_real_escape_string($conn, trim($val));
+
+}
+
+function display_error(){
+    global $error;
+
+    if (count($error)> 0){
+        echo '<div class="error"';
+        foreach($error as $errors){
+            echo $error.'<br>';
+        }
+        echo '</div>';
+    }
+
+}
+}
+
+function isLoggedIn(){
+    if (isset($_SESSION['user'])){
+        return True;
+}else{
+    return False;
+}
+}
+
+if(isset($_GET['logout'])){
+
+    session_destroy();
+    unset($_SESSION['user']);
+    header("location: login.php");
 }
